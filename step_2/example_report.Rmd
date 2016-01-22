@@ -1,7 +1,61 @@
 ---
-title: "example_report"
+bibliography: biib.bib
+csl: ecology.csl
 output: pdf_document
 ---
 
+```{r packages, echo=F, message=F, warning=F}
+# need my R package?
+#library(devtools)
+#install_github("aurielfournier/rel")
 
-example text here
+
+library(gridExtra)
+library(reshape2)
+library(reshape)
+library(xtable)
+library(ggplot2)
+library(jpeg)
+library(grid)
+library(auriel)
+library(chron)
+
+img <- readJPEG("./20150908_192206.jpg")
+grid.raster(img)
+
+
+```
+
+\huge RAILS ARE AWESOME
+
+\Large Progress Report 2015 
+
+\Large Auriel M.V. Fournier 
+
+\newpage
+
+So you can type text here and talk about how cool rails are. Discussing other things is not possible. Only rails. 
+
+You can also cite my cool papers on rails [@Fournier2013, @Fournier2015b]. You can also cite my editorial about the issue of unpaid work in ecology [@Fournier2015a]. 
+
+\newpage
+
+# Fun with Graphs
+
+```{r, echo=F, message=F, warning=F}
+
+dat <- read.csv('../step_1/example_survey_data.csv')
+
+mdat <- melt(data=dat[,c("jdate","sora")], id=c("jdate"))
+cdat <- cast(data=mdat, jdate ~ variable, median)
+
+ggplot(data=cdat)+geom_bar(aes(x=jdate, y=sora), stat="identity")+theme_krementz()+scale_x_ordinaldate(year=2015)+xlab("date")+ylab("sora per hectare")
+
+
+```
+
+
+
+\newpage
+
+# Citations
