@@ -1,0 +1,78 @@
+I'm a bit of an r nerd. 
+
+ok that is a like, I am a lot of an R nerd. But for good reason, R is incredibly useful for helping make the science process more streamlined, reproducible and error free.
+
+While using R, or any programming language 
+
+
+# Step 1 - Data Cleaning
+
+I don't enter my data in R (some do, I find it tedious) but once I've got the csvs exported from excel I script everything I do to my data in R, since I have an awful memory I will never remember what I did with my data, so I script it so I can look back and figure everything out and also redo it if/WHEN I need to. 
+
+The first part of this is data cleaning. As much as I talk about #otherpeoplesdata cleaning issues I often spend time cleaning my own data. This is checking for numeric values that aren't possible, and mostly for misspellings. Since I collect my data each fall over a three month period it also lets me explore my data along the way and see what is going on. 
+
+So, instead of pasting each night's bird data into one giant excel file I export the data files from our gps software in individual chunks and clean them/check them/stictch them together using the 'combining_night_files.R'
+
+I also use this for our survey data, and our veg data. Same process, loop through and check each file individually, check it over, and then stitch together. 
+
+I use amazing things like match (%in%) to make sure my plants are spelled correctly and my sites don't have typos. 
+
+The dplyr and tidyr packages, along with some remnant reshape that I have yet to convert are essential to making all of this happen. 
+
+# Step 2 - Reports
+
+One reason I love R is because of RMarkdown files, which let me take some of the pain-in-the-butt-ness out of report writing. I can write in R and knit it all together. 
+
+This is SUPER GREAT for creating regular reports for collaborators, or for generating a bunch of graphs every day without having to do a bunch of work (work smart, not hard!)
+
+It takes all of the copy paste out of things, and can make BEAUTIFUL REPORTS with ease. 
+
+I love RMarkdown, it is the best. Now if only I could get all my collaborators to write in it as well. Instead I send them pdfs, and they give me comments back, which works. 
+
+
+# Step 3 - Graphing
+
+I adore ggplot2. I get far to much joy out of making lots of beautiful graphs. 
+
+ggplot is a great way to make publication level graphs that can be used for presentations, to make fun graphics and generated through those RMarkdown reports I mentioned earlier to keep an eye on my data and create updates for collaborators. 
+
+one of the things I love about ggplot is that I have built a custom theme named for my adviser that makes graphs that he likes, which saves me A TON of time, which is a valuable thing, and helps keep my adviser happy, which is a valuable thing. 
+
+theme_advisor <- function () 
+{
+    theme(axis.text.x = element_text(size = 12, color = "black"), 
+        axis.text.y = element_text(size = 12, color = "black"), 
+        axis.title.y = element_text(size = 20), plot.background = element_blank(), 
+        panel.border = element_blank(), panel.grid.major = element_line(colour = NA), 
+        panel.grid.minor = element_line(colour = NA), title = element_text(size = 20), 
+        panel.background = element_rect(fill = "white"), axis.line = element_line(colour = "black"), 
+        strip.background = element_rect(fill = "white", color = "black"), 
+        strip.text = element_text(size = 15))
+}
+
+I have it as a part of [my personal R package](https://github.com/aurielfournier/rel) which is something I totally recommend people make if they have tasks they need to do over and over again. 
+
+it can contain real gems like this one
+
+rail_function <- function(love=TRUE){
+  if(love==TRUE){
+    print("I love rails!")
+  }
+  else {
+    print("I am not a cool person.")
+  }
+}
+
+which was inspired by Hilary Parker's awesome post on [how to build your own R package](http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)
+
+I keep all of my dates in ordinal date and so I built this custom scaler for ggplot, that makes creating graphs that have real looking dates, instead of ordinal dates a snap. 
+
+scale_x_ordinaldate <- function(year){
+scale_x_continuous(label=function(x) strftime(chron(x, origin=c(month=1, day=1,year=year)), "%B %d"))
+}
+
+# Step 4 - Modeling
+
+Most of the modeling I do, and most of the headaches in my day are all because of package 'unmarked' which allows me to use distance sampling data to examine questions about the density of birds with habtiat and study their migration. 
+
+There are so so so so many ways to model in R, 
