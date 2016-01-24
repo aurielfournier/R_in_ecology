@@ -1,27 +1,30 @@
 I'm a bit of an r nerd. 
 
-ok that is a like, I am a lot of an R nerd. But for good reason, R is incredibly useful for helping make the science process more streamlined, reproducible and error free.
+ok that is a lie, I am a lot of an R nerd. But for good reason, R is incredibly useful for helping make the science process more streamlined, reproducible and error free.
 
 While using R, or any programming language 
 
+The biggest reason I'm often talking to my fellow graduate students about learning R is because of the near constant need to redo things as a grad student, or even within science as a whole. If you spend an entire week using a GUI to run all your models, and then you present them to your advisor, and they realize that you need to change 'just one thing' it will take you another week. Often, when you have scripted that process it is often much faster to go back and make small changes, especially when you are at the stage of making graphs. The learning curve is steep, but especially if you plan to continue doing research after your degree, its totally worth it. It is also also very helpful when you are working on multiple projects where you might not touch the data for three months and then need to jump right back in. If you have well commented scripts (so scripts with lots of detail about what is going on) you can more easily jump back into the project, remember where you left out, why you dropped all the data from site 23, and what kind of model you ran. I'm juggling five dissertation chapters and three side projects right now. My to-do list and R scripts are the only thing keeping me above water. 
 
-# Step 1 - Data Cleaning
+# Data Cleaning
 
-I don't enter my data in R (some do, I find it tedious) but once I've got the csvs exported from excel I script everything I do to my data in R, since I have an awful memory I will never remember what I did with my data, so I script it so I can look back and figure everything out and also redo it if/WHEN I need to. 
+I don't enter my data in R. Some do, but I find it tedious and also have my technician enter about half of my data its easier to use a spreadhseet. Once its entered and proofed though I export it to csv and do script everything else I do to my data in R. I have an awful memory I will never remember what I did with my data, so I script it so I can look back and figure everything out and also redo it if/WHEN I need to. The raw data file (the original one that was entered from my field data sheets) NEVER gets changed, any alterting of that data is done within R and then written to a different csv.
 
-The first part of this is data cleaning. As much as I talk about #otherpeoplesdata cleaning issues I often spend time cleaning my own data. This is checking for numeric values that aren't possible, and mostly for misspellings. Since I collect my data each fall over a three month period it also lets me explore my data along the way and see what is going on. 
+The first part of this is data cleaning. As much as I talk about #otherpeoplesdata on twitter, I often spend a great deal of time cleaning my own data. This is checking for numeric values that aren't possible, and mostly for misspellings. Since I collect my data each fall over a three month period it also lets me explore my data along the way and see what is going on (how is migration progressing compared to the previous three years? are we seeing similar patterns in vegetation?). 
 
-So, instead of pasting each night's bird data into one giant excel file I export the data files from our gps software in individual chunks and clean them/check them/stictch them together using the 'combining_night_files.R'
+Cleaning data may sound tedious, and it can be, but its so important, otherwise when you try to run analysis or summarize your data and you get summaries of water depth for "missouri", "Missouri", and "MiSsouri" which is less then helpful.
 
-I also use this for our survey data, and our veg data. Same process, loop through and check each file individually, check it over, and then stitch together. 
+Instead of pasting each night's data into one giant excel file each morning I export the data files from our gps software in individual chunks and clean them/check them/stitch them together using the 'combining_night_files.R'
 
-I use amazing things like match (%in%) to make sure my plants are spelled correctly and my sites don't have typos. 
+I also have a script for our survey data, and our vegetation data. Same process, loop through and check each file individually, check it over, and then stitch together. 
+
+I use amazing things like match (%in%) to make sure my plants are spelled correctly and my sites don't have typos so that later when I go to analyze my data I don't have to spend a lot of time messing with it. 
 
 The dplyr and tidyr packages, along with some remnant reshape that I have yet to convert are essential to making all of this happen. 
 
-# Step 2 - Reports
+# Reports
 
-One reason I love R is because of RMarkdown files, which let me take some of the pain-in-the-butt-ness out of report writing. I can write in R and knit it all together. 
+One of the big ways that I use R almost every day is through RMarkdown files, which let me take some of the pain-in-the-butt-ness out of report writing and regenerating a series of graphs. I can write in R and knit it all together and come out with a nice looking and clear html or pdf file. 
 
 This is SUPER GREAT for creating regular reports for collaborators, or for generating a bunch of graphs every day without having to do a bunch of work (work smart, not hard!)
 
@@ -29,14 +32,13 @@ It takes all of the copy paste out of things, and can make BEAUTIFUL REPORTS wit
 
 I love RMarkdown, it is the best. Now if only I could get all my collaborators to write in it as well. Instead I send them pdfs, and they give me comments back, which works. 
 
-
-# Step 3 - Graphing
+# Graphing
 
 I adore ggplot2. I get far to much joy out of making lots of beautiful graphs. 
 
 ggplot is a great way to make publication level graphs that can be used for presentations, to make fun graphics and generated through those RMarkdown reports I mentioned earlier to keep an eye on my data and create updates for collaborators. 
 
-one of the things I love about ggplot is that I have built a custom theme named for my adviser that makes graphs that he likes, which saves me A TON of time, which is a valuable thing, and helps keep my adviser happy, which is a valuable thing. 
+One of the things I love about ggplot is that I have built a custom theme named for my adviser that makes graphs that he likes, which saves me A TON of time, which is a valuable thing, and helps keep my adviser happy, which is a valuable thing. 
 
 theme_advisor <- function () 
 {
@@ -63,16 +65,18 @@ rail_function <- function(love=TRUE){
   }
 }
 
-which was inspired by Hilary Parker's awesome post on [how to build your own R package](http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/)
+Which was inspired by Hilary Parker's awesome post on [how to build your own R package](http://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/).
 
-I keep all of my dates in ordinal date and so I built this custom scaler for ggplot, that makes creating graphs that have real looking dates, instead of ordinal dates a snap. 
+I keep all of my dates in ordinal date (day of the year) and so I built this custom scaler for ggplot, that makes creating graphs that have real looking dates (August 1), instead of ordinal dates a snap.
 
 scale_x_ordinaldate <- function(year){
 scale_x_continuous(label=function(x) strftime(chron(x, origin=c(month=1, day=1,year=year)), "%B %d"))
 }
 
-# Step 4 - Modeling
+# Modeling
 
 Most of the modeling I do, and most of the headaches in my day are all because of package 'unmarked' which allows me to use distance sampling data to examine questions about the density of birds with habtiat and study their migration. 
 
-There are so so so so many ways to model in R, 
+There are so so so so many ways to model in R, and so many different kinds. I'm most familiar with the hierarchical models supported by unmarked. 
+
+One reason I really like using R is how flexible it can be in making the re-arrnagement of data straight forward so that when my collabortors come back with yet another new way of thinking about the data I can quickly rearrange things and move forward with running the models. 
