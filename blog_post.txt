@@ -1,6 +1,6 @@
 I'm a bit of an r nerd. 
 
-ok that is a lie, I am a lot of an R nerd. But for good reason, R is incredibly useful for helping make the science process more streamlined, reproducible and error free.
+Ok, that is a lie, I am a lot of an R nerd. But for good reason, R is incredibly useful for helping make the science process more streamlined and reproducible and with less human error.
 
 While using R, or any programming language 
 
