@@ -1,0 +1,101 @@
+---
+bibliography: biib.bib
+csl: ecology.csl
+output: pdf_document
+---
+
+```{r packages, echo=F, message=F, warning=F}
+# need my R package?
+#library(devtools)
+#install_github("aurielfournier/rel")
+
+library(gridExtra)
+library(dplyr)
+library(tidyr)
+library(xtable)
+library(ggplot2)
+library(jpeg)
+library(grid)
+library(auriel)
+library(chron)
+
+img <- readJPEG("./20150908_192206.jpg")
+grid.raster(img)
+
+
+```
+
+\huge RAILS ARE AWESOME
+
+\Large Progress Report 2015 
+
+\Large Auriel M.V. Fournier 
+
+\newpage
+
+So you can type text here and talk about how cool rails are. Discussing other things is not possible. Only rails. 
+
+You can do intext citations using bibtext files in RMarkdown and cite my cool papers on rails [@Fournier2013, @Fournier2015b]. You can also cite my editorial about the issue of unpaid work in ecology [@Fournier2015a]. 
+
+\newpage
+
+# Fun with Graphs
+
+You can create graphs in RMarkdown and print them with or without the code being shown. the echo, message and warning arguments are sent to false in the first graph to hide the code and any other outputs. 
+
+```{r, echo=F, message=F, warning=F}
+
+dat <- read.csv('./example_survey_data.csv')
+
+
+gdat <- dat[,c("jdate","sora")] %>% group_by(jdate) %>% summarise_each(funs(median))
+
+
+
+ggplot(data=gdat)+geom_bar(aes(x=jdate, y=sora), stat="identity")+theme_krementz()+scale_x_ordinaldate(year=2015)+xlab("date")+ylab("sora per hectare")
+
+
+
+```
+
+
+
+\newpage
+
+```{r}
+
+dat <- read.csv('./example_survey_data.csv')
+
+
+gdat <- dat[,c("jdate","sora")] %>% group_by(jdate) %>% summarise_each(funs(median))
+
+
+
+ggplot(data=gdat)+geom_bar(aes(x=jdate, y=sora), stat="identity")+theme_krementz()+scale_x_ordinaldate(year=2015)+xlab("date")+ylab("sora per hectare")
+
+
+
+```
+
+
+\newpage
+
+```{r Table2, echo=F, message=F, warning=F, results='asis'}
+
+dat <- read.csv('./example_survey_data.csv',header=T)
+
+dat <- dat[,c("region","sora","fs")]
+
+
+sumdat <- dat %>% group_by(region, fs) %>% summarise_each(funs(median))
+
+
+print(xtable(sumdat, digits=0), type = 'latex', include.rownames=F, comment=F)
+
+```
+
+\newpage
+
+Your intext citation bibliography will automatically be after the first line. This is maybe the only thing that really annoys me about RMarkdown, since often my collaborators want the tables after the citations. 
+
+# Citations

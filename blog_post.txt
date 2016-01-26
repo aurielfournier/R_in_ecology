@@ -34,6 +34,8 @@ It takes all of the copy paste out of things, and can make BEAUTIFUL REPORTS wit
 
 I love RMarkdown, it is the best. Now if only I could get all my collaborators to write in it as well. Instead I send them pdfs, and they give me comments back, which works. 
 
+This is a [good place to start](http://rmarkdown.rstudio.com/) with RMarkdown. 
+
 # Graphing
 
 I adore ggplot2. I get far to much joy out of making lots of beautiful graphs. 
