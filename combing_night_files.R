@@ -19,9 +19,7 @@ for(i in 1:length(file_names)){
   lesscol <-  int[,c("lat","name")]
   lesscol$name <- as.character(lesscol$name)
   lesscol$name <- ifelse(nchar(lesscol$name)==7,paste0(lesscol$name,"N"),lesscol$name)
-  lesscol <- lesscol %>% separate(name, into=c("name","distance"),sep=5)
-  lesscol <- lesscol %>% separate(distance, into=c("species","distance"), sep=1)
-  lesscol <- lesscol %>% separate(distance, into=c("distance","flush_walk"), sep=-2)
+  lesscol <- lesscol %>% separate(name, into=c("name","distance"),sep=5) %>% separate(distance, into=c("species","distance"), sep=1) %>% separate(distance, into=c("distance","flush_walk"), sep=-2)
   lesscol$distance <- as.numeric(lesscol$distance)
   lesscol$species <- tolower(lesscol$species)
   lesscol$year <- as.numeric(names$year)
